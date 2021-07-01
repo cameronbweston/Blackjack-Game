@@ -22,3 +22,12 @@ body {
     margin: 5vh auto;
     
 }
+
+#insuranceBar {
+    border: 3px solid wheat;
+    border-radius: 1em;
+    background: rgba(26, 26, 156, 0.562);
+    margin: auto;
+    height: 5vh;
+
+}
