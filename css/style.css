@@ -3,29 +3,24 @@ body {
     Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     height: 100vh;
     background: linear-gradient(-45deg, rgba(2, 10, 1, 0.897), rgb(50, 145, 55));
-    margin: 0;
 }
 
 #gameBoard {
     margin: auto;
     height: 90vh;
-    width: 90vh;
     display: block;
-    flex-direction: row;
 }
 
 #dealerGameMat {
-    border: 3px solid wheat;
+    border: 5px solid wheat;
     border-radius: 1.5em;
-    margin: auto;
     height: 20vh;
     width: 15vh;
     display: block;
     margin: 5vh auto;
-    
 }
 
-#insuranceBar {
+#insuranceBar{
     border: 3px solid wheat;
     border-radius: 1em;
     color: wheat;
@@ -33,5 +28,27 @@ body {
     background: rgba(26, 26, 156, 0.562);
     margin: auto;
     height: 5vh;
+    width: 100vh;
+}
 
+#playerGameMats {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    height: 30vh;
+    width: 100vw;
+    margin: 0 0 10vh 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.playmats {
+    border: 5px solid wheat;
+    border-radius: 1em;
+    height: 20vh;
+    width: 15vh;
 }
