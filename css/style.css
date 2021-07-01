@@ -2,5 +2,23 @@ body {
     height: 100vh;
     background: linear-gradient(-45deg, rgba(2, 10, 1, 0.897), rgb(50, 145, 55));
     margin: 0;
-    display: flex;
+}
+
+#gameBoard {
+    margin: auto;
+    height: 90vh;
+    width: 90vh;
+    display: block;
+    flex-direction: row;
+}
+
+#dealerGameMat {
+    border: 3px solid wheat;
+    border-radius: 1.5em;
+    margin: auto;
+    height: 20vh;
+    width: 15vh;
+    display: block;
+    margin: 5vh auto;
+    
 }

@@ -11,7 +11,7 @@ let playerCurrentCash;
 let playerCurrentBet;
 
 /*------------------------ Cached Element References ------------------------*/
-
+ 
 
 
 /*----------------------------- Event Listeners -----------------------------*/
