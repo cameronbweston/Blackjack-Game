@@ -11,8 +11,8 @@ let playerCurrentCash;
 let playerCurrentBet;
 
 /*------------------------ Cached Element References ------------------------*/
- 
-
+ const playerCardsEl = document.getElementById('playerCardStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
+ const dealerCardsEl = document.getElementById('dealerCardStack'); //Dont forget to style this
 
 /*----------------------------- Event Listeners -----------------------------*/
 
