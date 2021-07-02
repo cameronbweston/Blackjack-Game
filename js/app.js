@@ -10,9 +10,13 @@ let playerCurrentCash;
 let playerCurrentBet;
 let deck = [];
 /*------------------------ Cached Element References ------------------------*/
- const playerCardsEl = document.getElementById('playerCardStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
- const dealerCardsEl = document.getElementById('dealerCardStack'); //Dont forget to style this
-
+const playerCardsEl = document.getElementById('playerCardStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
+const dealerCardsEl = document.getElementById('dealerCardStack'); //Dont forget to style this
+const hitButton = document.getElementById('hitButton');
+const stayButton = document.getElementById('stayButton');
+const playButton = document.getElementById('playButton');
+const doubleDownButton = document.getElementById('doubleDownButton');
+const splitButton = document.getElementById('hitButton');
 /*----------------------------- Event Listeners -----------------------------*/
 
 
