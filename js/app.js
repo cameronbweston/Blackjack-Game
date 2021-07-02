@@ -19,6 +19,7 @@ let deck = [];
 
 /*-------------------------------- Functions --------------------------------*/
 init();
+firstDeal();
 
 function init() {
     //1. This will not be kicked off until user places bet
@@ -26,6 +27,10 @@ function init() {
 
     //2. refresh all game stats and set everything back to zero
     //3. call Deal()
+}
+
+function reset() {
+
 }
 
 function firstDeal() {
@@ -40,12 +45,20 @@ function firstDeal() {
     console.log(deck);
 
     //Deal a random int index card to the player, remove from deck
+    const dealerFirstCard = deck.splice([Math.floor(Math.random() * 52 + 1)], 1);
     //Deal a random int index card to the dealer, remove from deck
-
+    const playerFirstCard = deck.splice([Math.floor(Math.random() * 52 + 1)], 1);
     //Deal a random int index card to the player, remove from deck
+    const dealerSecondCard = deck.splice([Math.floor(Math.random() * 52 + 1)], 1);
     //Deal a random int index card card to the dealer, remove from deck
-
+    const playerSecondCard = deck.splice([Math.floor(Math.random() * 52 + 1)], 1);
+    console.log(deck);
+    dealerCards.push(dealerFirstCard, dealerSecondCard);
+    playerCards.push(playerFirstCard, playerSecondCard);
     //Wait for user input...
+    console.log(`dealer first card: ${dealerFirstCard} dealer second card ${dealerSecondCard} player first card: ${playerFirstCard} player second card:${playerSecondCard}`);
+
+    //Render dealer and player card images
 }
 
 function playerHit() {
