@@ -49,14 +49,13 @@ body {
 }
 
 #chipPiles {
-
-    height: 10vh;
+    height: 11vh;
     width: 100vw;
-    margin: 0;
+    margin: auto;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 .chips {
@@ -65,3 +64,23 @@ body {
     height: 10vh;
     width: 15vh;
 }
+
+#playButtons {
+    height: 10vh;
+    width: 100vw;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardButtons {
+    border: 3px solid black;
+    border-radius: 4em;
+    height: 7vh;
+    width: 15vh;
+    margin: 0.3vh;
+}
+
+
