@@ -18,7 +18,11 @@ const playButton = document.getElementById('playButton');
 const doubleDownButton = document.getElementById('doubleDownButton');
 const splitButton = document.getElementById('hitButton');
 /*----------------------------- Event Listeners -----------------------------*/
-
+hitButton.addEventListener('click', hit());
+stayButton.addEventListener('click', stay());
+playButton.addEventListener('click', init());
+doubleDownButton.addEventListener('click', doubleDown());
+splitButton.addEventListener('click', split());
 
 
 /*-------------------------------- Functions --------------------------------*/
