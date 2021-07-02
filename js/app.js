@@ -61,8 +61,9 @@ function firstDeal() {
     //Render dealer and player card images
 }
 
-function playerHit() {
-
+function hit(currentPlayer) {
+    const hit = deck.splice([Math.floor(Math.random() * 52 + 1)], 1);
+    currentPlayer.push(playerHit);
 }
 
 function dealerTurn() {
@@ -96,3 +97,6 @@ function DecideRoundWinner() {
 
 }
 
+function renderCards() {
+
+}

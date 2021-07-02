@@ -32,11 +32,9 @@ body {
 }
 
 #playerGameMats {
-    display: block;
-  
-    height: 30vh;
+    height: 20vh;
     width: 100vw;
-    margin: 15vh 0 0 0;
+    margin: 10vh 0 3vh 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -47,5 +45,23 @@ body {
     border: 5px solid wheat;
     border-radius: 1em;
     height: 20vh;
+    width: 15vh;
+}
+
+#chipPiles {
+
+    height: 10vh;
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.chips {
+    border: 5px solid darkred;
+    border-radius: 4em;
+    height: 10vh;
     width: 15vh;
 }
