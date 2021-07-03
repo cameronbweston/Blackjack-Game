@@ -43,6 +43,8 @@ function init() {
     deck = [];
     playerCards = [];
     dealerCards = [];
+    removeAllChildNodes(playerCardsEl);
+    removeAllChildNodes(dealerCardsEl);
     //2. call Deal()
     firstDeal();
 }
@@ -100,7 +102,6 @@ function dealerTurn() {
 
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
-
     while(calculateCards(dealerCards) < 16) {
         let card = hit();
         dealerCards.push(card);
@@ -168,17 +169,25 @@ function renderCards() {
     console.log(playerCards);
     console.log(dealerCards);
 
-    playerCards.forEach(card => {
-        let newCard = document.createElement("div");
-        newCard.id = 'playerCard'
-        newCard.className = 'card xlarge ' + card;
-        playerCardsEl.appendChild(newCard);
-    })
+    if (playerCards.length < 3 && dealerCards.length < 3) {
+        playerCards.forEach(card => {
+            let newCard = document.createElement("div");
+            newCard.id = 'playerCard'
+            newCard.className = 'card xlarge ' + card;
+            playerCardsEl.appendChild(newCard);
+        })
+    
+        dealerCards.forEach(card => {
+            let newCard = document.createElement("div");
+            newCard.id = 'playerCard'
+            newCard.className = 'card xlarge ' + card;
+            dealerCardsEl.appendChild(newCard);
+        })
+    }
+}
 
-    dealerCards.forEach(card => {
-        let newCard = document.createElement("div");
-        newCard.id = 'playerCard'
-        newCard.className = 'card xlarge ' + card;
-        dealerCardsEl.appendChild(newCard);
-    })
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }
