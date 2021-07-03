@@ -1,3 +1,4 @@
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -9,6 +10,7 @@ body {
 #gameBoard {
     margin: auto;
     height: 90vh;
+    width: 90vw;
     display: block;
 }
 
@@ -49,10 +51,26 @@ body {
     width: 15vh;
 }
 
+#dealerStack {
+    height: 100%;
+    width: 100%;
+}
+
+#playerCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 110%;
+    width: 110%;
+    border-color: black;
+    border: 2px solid black;
+    margin-bottom: -18vh;
+}
+
 #chipPiles {
     height: 11vh;
     width: 100vw;
-    margin: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -66,7 +84,7 @@ body {
     width: 15vh;
 }
 
-#hitStayButtons {
+#buttonBlock {
     height: 10vh;
     width: 100vw;
     margin: auto;
@@ -84,20 +102,3 @@ body {
     margin: 0.3vh;
 }
 
-#floatingButtons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.float{
-	width:60px;
-	height:1vh;
-	left:40px;
-	background-color:rgb(35, 180, 216);
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-	box-shadow: 2px 2px 3px #999;
-    margin: 0 0 10vh 0;
-}

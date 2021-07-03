@@ -1,6 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
 const suits = ["spades", "diamonds", "clubs", "hearts"];
-const cardValues = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+const cardValues = ["A", "02", "03", "04", "05", "06", "07", "08", "09", "10", "J", "Q", "K"];
 const playerCash = 1000;
 
 /*--------------------------------Game State Variables --------------------------------*/
@@ -10,8 +10,8 @@ let playerCurrentCash;
 let playerCurrentBet;
 let deck = [];
 /*------------------------ Cached Element References ------------------------*/
-const playerCardsEl = document.getElementById('playerCardStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
-const dealerCardsEl = document.getElementById('dealerCardStack'); //Dont forget to style this
+const playerCardsEl = document.getElementById('playerStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
+const dealerCardsEl = document.getElementById('dealerStack'); //Dont forget to style this
 const hitButton = document.getElementById('hitButton');
 const stayButton = document.getElementById('stayButton');
 const playButton = document.getElementById('playButton');
@@ -62,10 +62,10 @@ function firstDeal() {
     //Shuffle and create deck
     deck = []
     for (i = 0; i < 13; i++) {
-        deck.push(cardValues[i] + 'S');
-        deck.push(cardValues[i] + 'D');
-        deck.push(cardValues[i] + 'C');
-        deck.push(cardValues[i] + 'H');
+        deck.push('s' + cardValues[i]);
+        deck.push('d' + cardValues[i]);
+        deck.push('c' + cardValues[i]);
+        deck.push('h' + cardValues[i]);
     }
     console.log(deck);
 
@@ -79,8 +79,11 @@ function firstDeal() {
     playerCards.push(playerFirstCard, playerSecondCard);
     //Wait for user input...
     //Render dealer and player card images
+    renderCards();
+
     alert(`Dealer:${dealerCards} Player: ${playerCards}`);
     let playerHandValue = calculateCards(playerCards);
+
     if(playerHandValue === 21) {
         alert('INSTANT BLACKJACK!!');
         //render player win
@@ -162,5 +165,20 @@ function split() {
 }
 
 function renderCards() {
+    console.log(playerCards);
+    console.log(dealerCards);
 
+    playerCards.forEach(card => {
+        let newCard = document.createElement("div");
+        newCard.id = 'playerCard'
+        newCard.className = 'card xlarge ' + card;
+        playerCardsEl.appendChild(newCard);
+    })
+
+    dealerCards.forEach(card => {
+        let newCard = document.createElement("div");
+        newCard.id = 'playerCard'
+        newCard.className = 'card xlarge ' + card;
+        dealerCardsEl.appendChild(newCard);
+    })
 }

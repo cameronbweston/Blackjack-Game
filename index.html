@@ -5,31 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/cardstarter.css">
     <script defer src="./js/app.js"></script>
     <title>Blackjack</title>
 </head>
 <body>
     <section id="gameBoard">
         <div id="dealerGameMat">
-            <div id="dealerCardStack"></div>
+            <div id="dealerStack">
+            </div>
         </div>
         <div id="insuranceBar">
             <h1>INSURANCE PAYS 2 TO 1</h1>
         </div>
         <div id="playerGameMats">
-            <div id='sq0' class="playmats"></div>
-            <div id='sq1' class="playmats">
-                <div id="playerCardStack">
-                </div>
+            <div class="playmats"></div>
+            <div id='playerStack' class="playmats">
             </div>
-            <div id='sq2' class="playmats"></div>
+            <div class="playmats"></div>
         </div>
         <div id="chipPiles">
-            <div id="pile0" class="chips"></div>
+            <div id="pile0" class="chips"></div> 
             <div id="playerChips" class="chips"></div>
             <div id="pile2" class="chips"></div>
         </div>
-        <div id="hitStayButtons">
+        <div id="buttonBlock">
             <button id="playButton" class="cardButtons" type="button"><h1>PLAY</h1></button>
             <button id="hitButton" class="cardButtons" type="button"><h1>HIT</h1></button>
             <button id="stayButton" class="cardButtons" type="button"><h1>STAY</h1></button>
