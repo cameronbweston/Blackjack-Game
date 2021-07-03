@@ -16,7 +16,7 @@ const hitButton = document.getElementById('hitButton');
 const stayButton = document.getElementById('stayButton');
 const playButton = document.getElementById('playButton');
 const doubleDownButton = document.getElementById('doubleDownButton');
-const splitButton = document.getElementById('hitButton');
+const splitButton = document.getElementById('splitButton');
 /*----------------------------- Event Listeners -----------------------------*/
 hitButton.addEventListener('click', (Event) => {
     let card = hit();
@@ -144,11 +144,21 @@ function calculateCards(playerCardArray) {
 }
 
 function doubleDown() {
-    
+    //Render another chip on the board and double players bet HUD
+    if (playerCards.length == 2) {
+        //Can only double down after the first 2 cards are dealt
+        //This should be the only time this button is not disabled
+
+    }
 }
 
 function split() {
+    let playerCard1 = String(playerCards[0]).substring(0,1);
+    let playerCard2 = String(playerCards[1]).substring(0,1);
+    console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
+    if (playerCards.length == 2 &&  (playerCard1 === playerCard2)) {
 
+    }
 }
 
 function renderCards() {
