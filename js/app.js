@@ -18,7 +18,16 @@ const playButton = document.getElementById('playButton');
 const doubleDownButton = document.getElementById('doubleDownButton');
 const splitButton = document.getElementById('hitButton');
 /*----------------------------- Event Listeners -----------------------------*/
-hitButton.addEventListener('click', hit);
+hitButton.addEventListener('click', (Event) => {
+    let card = hit();
+    playerCards.push(card);
+
+    //check for player bust and end round
+    let playerHandValue = calculateCards(playerCards);
+    if (playerHandValue > 21) {
+        alert('Player bust... better luck next time')
+    }
+});
 stayButton.addEventListener('click', dealerTurn);
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
@@ -31,6 +40,9 @@ function init() {
     //1. This will not be kicked off until user places bet
     //If user bet, proceed
     //placeBet();
+    deck = [];
+    playerCards = [];
+    dealerCards = [];
     //2. call Deal()
     firstDeal();
 }
@@ -66,10 +78,13 @@ function firstDeal() {
     dealerCards.push(dealerFirstCard, dealerSecondCard);
     playerCards.push(playerFirstCard, playerSecondCard);
     //Wait for user input...
-    console.log(`dealer first card: ${dealerFirstCard} dealer second card ${dealerSecondCard} player first card: ${playerFirstCard} player second card:${playerSecondCard}`);
-
     //Render dealer and player card images
     alert(`Dealer:${dealerCards} Player: ${playerCards}`);
+    let playerHandValue = calculateCards(playerCards);
+    if(playerHandValue === 21) {
+        alert('INSTANT BLACKJACK!!');
+        //render player win
+    }
 }
 
 function hit() {
@@ -82,20 +97,39 @@ function dealerTurn() {
 
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
-    let handValue = calculateCards(dealerCards);
-    console.log(`handValue: ${handValue}`);
 
-    
-    //call DecideRoundWinner()
+    while(calculateCards(dealerCards) < 16) {
+        let card = hit();
+        dealerCards.push(card);
+    }
+
+    console.log('done');
+    let dealerHandValue = calculateCards(dealerCards);
+    let playerHandValue = calculateCards(playerCards);
+    console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
+
+    //After dealer is done drawing cards or busts --> decide winner
+    if (dealerHandValue > 21) {
+        alert('dealer busts! you win!');
+    }
+    else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
+        alert('House wins... better luck next time');
+    }
+    else if (dealerHandValue === playerHandValue) {
+        alert('Push! (tie)');
+    }
+    else if (playerHandValue > dealerHandValue) {
+        alert('Player beat dealer!!!');
+    }
 }
 
 function calculateCards(playerCardArray) {
     let total = 0;
     console.log(`playerCardArray: ${playerCardArray}`);
     playerCardArray.forEach(card => {
-        console.log(`card: ${card}`)
+        //console.log(`card: ${card}`)
         let cardValue = String(card).substring(0,1);
-        console.log(`cardvalue: ${cardValue}`);
+        //console.log(`cardvalue: ${cardValue}`);
         if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
             total += 10;
         }
@@ -114,15 +148,6 @@ function doubleDown() {
 }
 
 function split() {
-
-}
-
-function DecideRoundWinner() {
-    //If player wins round...Play celebratory winning audio or animation
-
-    //If player loses round...Play crowd sad audio or animation
-
-    //clear game table and prepare for next round
 
 }
 
