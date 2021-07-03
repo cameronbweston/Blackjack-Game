@@ -21,7 +21,7 @@ const splitButton = document.getElementById('splitButton');
 hitButton.addEventListener('click', (Event) => {
     let card = hit();
     playerCards.push(card);
-    renderCards();
+    renderCards('p');
     //check for player bust and end round
     let playerHandValue = calculateCards(playerCards);
     if (playerHandValue > 21) {
@@ -81,7 +81,8 @@ function firstDeal() {
     playerCards.push(playerFirstCard, playerSecondCard);
     //Wait for user input...
     //Render dealer and player card images
-    renderCards();
+    renderCards('d');
+    renderCards('p');
 
     let playerHandValue = calculateCards(playerCards);
 
@@ -104,6 +105,7 @@ function dealerTurn() {
     while(calculateCards(dealerCards) < 16) {
         let card = hit();
         dealerCards.push(card);
+        renderCards('d');
     }
 
     console.log('done');
@@ -162,25 +164,33 @@ function split() {
     }
 }
 
-function renderCards() {
+function renderCards(string) {
     console.log(playerCards);
     console.log(dealerCards);
+    let cardArray, element;
 
-    if (playerCards.length < 3 && dealerCards.length < 3) {
-        playerCards.forEach(card => {
+    if (string === 'p') {
+        cardArray = playerCards;
+        element = playerCardsEl;
+    } else if (string === 'd') {
+        cardArray = dealerCards;
+        element = dealerCardsEl;
+    }
+
+    if (cardArray.length < 3) {
+        cardArray.forEach(card => {
             let newCard = document.createElement("div");
             newCard.id = 'playerCard'
             newCard.className = 'card xlarge ' + card;
-            playerCardsEl.appendChild(newCard);
+            element.appendChild(newCard);
         })
-    
-        dealerCards.forEach(card => {
-            let newCard = document.createElement("div");
-            newCard.id = 'playerCard'
-            newCard.className = 'card xlarge ' + card;
-            dealerCardsEl.appendChild(newCard);
-        })
-    } 
+    } else {
+        let card = cardArray[cardArray.length-1];
+        let newCard = document.createElement("div");
+        newCard.id = 'playerCard'
+        newCard.className = 'card xlarge ' + card;
+        element.appendChild(newCard);
+    }
 }
 
 function removeAllChildNodes(parent) {
