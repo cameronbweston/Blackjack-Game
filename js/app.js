@@ -21,7 +21,7 @@ const splitButton = document.getElementById('splitButton');
 hitButton.addEventListener('click', (Event) => {
     let card = hit();
     playerCards.push(card);
-
+    renderCards();
     //check for player bust and end round
     let playerHandValue = calculateCards(playerCards);
     if (playerHandValue > 21) {
@@ -83,7 +83,6 @@ function firstDeal() {
     //Render dealer and player card images
     renderCards();
 
-    alert(`Dealer:${dealerCards} Player: ${playerCards}`);
     let playerHandValue = calculateCards(playerCards);
 
     if(playerHandValue === 21) {
@@ -131,9 +130,7 @@ function calculateCards(playerCardArray) {
     let total = 0;
     console.log(`playerCardArray: ${playerCardArray}`);
     playerCardArray.forEach(card => {
-        //console.log(`card: ${card}`)
-        let cardValue = String(card).substring(0,1);
-        //console.log(`cardvalue: ${cardValue}`);
+        let cardValue = String(card).substring(1,3);
         if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
             total += 10;
         }
@@ -183,7 +180,7 @@ function renderCards() {
             newCard.className = 'card xlarge ' + card;
             dealerCardsEl.appendChild(newCard);
         })
-    }
+    } 
 }
 
 function removeAllChildNodes(parent) {
