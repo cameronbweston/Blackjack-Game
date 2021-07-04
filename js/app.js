@@ -48,7 +48,7 @@ function init() {
     message.innerText = 'Insurance Pays 2 to 1'
 
     //If user bet, proceed
-    placeBet();
+    //placeBet();
     //2. call Deal()
     firstDeal();
 }
@@ -186,12 +186,19 @@ function doubleDown() {
 }
 
 function split() {
-    let playerCard1 = String(playerCards[0]).substring(0,1);
-    let playerCard2 = String(playerCards[1]).substring(0,1);
-    console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
-    // if (playerCards.length == 2 &&  (//playerCard1[value] === //playerCard2[value])) {
+    let playerCard1 = String(playerCards[0]).substring(1,3);
+    let playerCard2 = String(playerCards[1]).substring(1,3);
+    let array = [playerCard1, playerCard2];
+    let faces = ['J', 'Q', 'K', 'A', '10'];
+    let faceCard1 = faces.includes(playerCard1);
+    let faceCard2 = faces.includes(playerCard2);
 
-    // }
+    console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
+    //Checks if card values are the same OR if both cards are face cards or face card and 10
+    if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2)) {
+        console.log('made it to split');
+        
+    }
 }
 
 function renderCards(currentPlayer) {

@@ -24,7 +24,7 @@ body {
 
 .insuranceBar{
     border: 3px solid wheat;
-    border-radius: 1em;
+    border-radius: 0.5em;
     color: wheat;
     background: rgba(26, 26, 156, 0.562);
     height: 5vh;
@@ -35,6 +35,7 @@ body {
     justify-content: center;
     margin: auto;
     margin-top: 10%;
+    font-size: 1em;
 }
 
 #playerGameMats {
