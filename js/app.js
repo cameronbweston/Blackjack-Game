@@ -1,18 +1,20 @@
 /*-------------------------------- Constants --------------------------------*/
 const suits = ["spades", "diamonds", "clubs", "hearts"];
 const cardValues = ["A", "02", "03", "04", "05", "06", "07", "08", "09", "10", "J", "Q", "K"];
-const playerCash = 1000;
 
 /*--------------------------------Game State Variables --------------------------------*/
 let dealerCards = [];
 let playerCards = [];
-let playerCurrentCash;
 let playerCurrentBet;
 let deck = [];
+let playerCurrentCash = 1000;
+
 /*------------------------ Cached Element References ------------------------*/
 const playerCardsEl = document.getElementById('playerStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
 const dealerCardsEl = document.getElementById('dealerStack'); //Dont forget to style this
 const message = document.getElementById('message');
+const currentBetEl = document.getElementById('currentBet');
+const totalCashEl = document.getElementById('totalCash');
 const hitButton = document.getElementById('hitButton');
 const stayButton = document.getElementById('stayButton');
 const playButton = document.getElementById('playButton');
@@ -38,15 +40,15 @@ splitButton.addEventListener('click', split);
 
 function init() {
     console.log('init');
-    //1. This will not be kicked off until user places bet
-    //If user bet, proceed
-    //placeBet();
     deck = [];
     playerCards = [];
     dealerCards = [];
     removeAllChildNodes(playerCardsEl);
     removeAllChildNodes(dealerCardsEl);
     message.innerText = 'Insurance Pays 2 to 1'
+
+    //If user bet, proceed
+    placeBet();
     //2. call Deal()
     firstDeal();
 }
@@ -60,6 +62,7 @@ function placeBet() {
     const bet = prompt('Please enter a bet less than 1000');
     console.log(bet);
     playerCurrentBet = bet;
+    currentBetEl.innerText = `Current Bet: ${playerCurrentBet}`
 }
 
 function firstDeal() {
@@ -119,17 +122,28 @@ function dealerTurn() {
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
 
     //After dealer is done drawing cards or busts --> decide winner
+    let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
+    console.log(playerCurrentCash);
+
     if (dealerHandValue > 21) {
-        message.innerText = 'Dealer busts! You win!'
+        playerCurrentCash += payout;
+        message.innerText = `Dealer busts! You win $${payout}`
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
         message.innerText = 'House wins... better luck next time';
+        playerCurrentCash -= playerCurrentBet;
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue === playerHandValue) {
         message.innerText = 'Push! (tie)';
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (playerHandValue > dealerHandValue) {
-        message.innerText = 'Player Wins!!!';
+        message.innerText = `Player wins $${payout}!!!`;
+        playerCurrentCash += payout;
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
 }
 
@@ -155,8 +169,10 @@ function doubleDown() {
     if (playerCards.length == 2) {
         //Can only double down after the first 2 cards are dealt
         //This should be the only time this button is not disabled
-
+        playerCurrentBet *= 2;
     }
+    //In mos casinos, player can double down only once and must play that hand after hitting again.
+    dealerTurn();
 }
 
 function split() {
