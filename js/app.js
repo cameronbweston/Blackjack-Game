@@ -92,7 +92,10 @@ function firstDeal() {
     let playerHandValue = calculateCards(playerCards);
 
     if(playerHandValue === 21) {
-        alert('BLACKJACK!!');
+        let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
+        message.innerText = `BLACKJACK $${payout}!!!`;
+        playerCurrentCash += payout;
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
         //render player win
         //end round
     }
@@ -166,22 +169,29 @@ function calculateCards(playerCardArray) {
 
 function doubleDown() {
     //Render another chip on the board and double players bet HUD
-    if (playerCards.length == 2) {
+    if (playerCards.length < 3) {
         //Can only double down after the first 2 cards are dealt
         //This should be the only time this button is not disabled
         playerCurrentBet *= 2;
+        let newCard = hit();
+        playerCards.push(newCard);
+        renderCards('p');
+        //In most casinos, player can double down only once and must play that hand after hitting again.
+        let playerHandValue = calculateCards(playerCards);
+        if (playerHandValue > 21) {
+            message.innerText = 'Player bust... better luck next time';
+        }
+        else { dealerTurn(); }
     }
-    //In mos casinos, player can double down only once and must play that hand after hitting again.
-    dealerTurn();
 }
 
 function split() {
     let playerCard1 = String(playerCards[0]).substring(0,1);
     let playerCard2 = String(playerCards[1]).substring(0,1);
     console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
-    if (playerCards.length == 2 &&  (playerCard1 === playerCard2)) {
+    // if (playerCards.length == 2 &&  (//playerCard1[value] === //playerCard2[value])) {
 
-    }
+    // }
 }
 
 function renderCards(currentPlayer) {
