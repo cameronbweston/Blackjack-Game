@@ -108,6 +108,9 @@ function dealerTurn() {
         renderCards('d');
     }
 
+    //Flip over dealer's face down card
+    dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
+    
     console.log('done');
     let dealerHandValue = calculateCards(dealerCards);
     let playerHandValue = calculateCards(playerCards);
@@ -164,15 +167,15 @@ function split() {
     }
 }
 
-function renderCards(string) {
+function renderCards(currentPlayer) {
     console.log(playerCards);
     console.log(dealerCards);
     let cardArray, element;
 
-    if (string === 'p') {
+    if (currentPlayer === 'p') {
         cardArray = playerCards;
         element = playerCardsEl;
-    } else if (string === 'd') {
+    } else if (currentPlayer === 'd') {
         cardArray = dealerCards;
         element = dealerCardsEl;
     }
@@ -181,8 +184,16 @@ function renderCards(string) {
         cardArray.forEach(card => {
             let newCard = document.createElement("div");
             newCard.id = 'playerCard'
-            newCard.className = 'card xlarge ' + card;
-            element.appendChild(newCard);
+
+            //Make dealer's first card, face down
+            if (currentPlayer === 'd' && cardArray[0] === card) { 
+                newCard.className = 'card xlarge back-red';
+                element.appendChild(newCard);
+            }
+            else {
+                newCard.className = 'card xlarge ' + card;
+                element.appendChild(newCard);
+            }
         })
     } else {
         let card = cardArray[cardArray.length-1];
