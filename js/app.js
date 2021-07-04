@@ -110,8 +110,7 @@ function dealerTurn() {
 
     //Flip over dealer's face down card
     dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
-    
-    console.log('done');
+
     let dealerHandValue = calculateCards(dealerCards);
     let playerHandValue = calculateCards(playerCards);
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
@@ -133,7 +132,6 @@ function dealerTurn() {
 
 function calculateCards(playerCardArray) {
     let total = 0;
-    console.log(`playerCardArray: ${playerCardArray}`);
     playerCardArray.forEach(card => {
         let cardValue = String(card).substring(1,3);
         if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
