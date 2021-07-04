@@ -12,6 +12,7 @@ let deck = [];
 /*------------------------ Cached Element References ------------------------*/
 const playerCardsEl = document.getElementById('playerStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
 const dealerCardsEl = document.getElementById('dealerStack'); //Dont forget to style this
+const message = document.getElementById('message');
 const hitButton = document.getElementById('hitButton');
 const stayButton = document.getElementById('stayButton');
 const playButton = document.getElementById('playButton');
@@ -25,7 +26,7 @@ hitButton.addEventListener('click', (Event) => {
     //check for player bust and end round
     let playerHandValue = calculateCards(playerCards);
     if (playerHandValue > 21) {
-        alert('Player bust... better luck next time')
+        message.innerText = 'Player bust... better luck next time';
     }
 });
 stayButton.addEventListener('click', dealerTurn);
@@ -45,6 +46,7 @@ function init() {
     dealerCards = [];
     removeAllChildNodes(playerCardsEl);
     removeAllChildNodes(dealerCardsEl);
+    message.innerText = 'Insurance Pays 2 to 1'
     //2. call Deal()
     firstDeal();
 }
@@ -87,8 +89,9 @@ function firstDeal() {
     let playerHandValue = calculateCards(playerCards);
 
     if(playerHandValue === 21) {
-        alert('INSTANT BLACKJACK!!');
+        alert('BLACKJACK!!');
         //render player win
+        //end round
     }
 }
 
@@ -117,16 +120,16 @@ function dealerTurn() {
 
     //After dealer is done drawing cards or busts --> decide winner
     if (dealerHandValue > 21) {
-        alert('dealer busts! you win!');
+        message.innerText = 'Dealer busts! You win!'
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
-        alert('House wins... better luck next time');
+        message.innerText = 'House wins... better luck next time';
     }
     else if (dealerHandValue === playerHandValue) {
-        alert('Push! (tie)');
+        message.innerText = 'Push! (tie)';
     }
     else if (playerHandValue > dealerHandValue) {
-        alert('Player beat dealer!!!');
+        message.innerText = 'Player Wins!!!';
     }
 }
 
