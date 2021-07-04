@@ -169,7 +169,7 @@ function calculateCards(playerCardArray) {
 
 function doubleDown() {
     //Render another chip on the board and double players bet HUD
-    if (playerCards.length < 3) {
+    if (playerCards.length == 2) {
         //Can only double down after the first 2 cards are dealt
         //This should be the only time this button is not disabled
         playerCurrentBet *= 2;
