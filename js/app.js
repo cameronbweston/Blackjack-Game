@@ -35,11 +35,19 @@ hitButton.addEventListener('click', (Event) => {
     }
 });
 stayButton.addEventListener('click', (Event) => {
-    dealerTurn(playerCards);
+    let firstGameOverMessage = dealerTurn(playerCards, playerCurrentBet);
+    let secondGameOverMessage = '';
+
     if (playerSplitCards.length > 0) {
         console.log('Calculating SPLIT Hand')
-        dealerTurn(playerSplitCards);
-}
+        secondGameOverMessage = dealerTurn(playerSplitCards, splitBet);
+        console.log(`For your first hand: ${firstGameOverMessage}, For your second hand: ${secondGameOverMessage}`);
+        message.innerText = `First hand: ${firstGameOverMessage}, Second hand: ${secondGameOverMessage}`;
+    }
+    else {
+        message.innerText = firstGameOverMessage;
+    }
+
 });
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
@@ -115,7 +123,7 @@ function hit() {
     return deck.splice([Math.floor(Math.random() * deck.length)], 1);
 }
 
-function dealerTurn(cardArray) {
+function dealerTurn(cardArray, handBet) {
     //After player is done betting, doubling down, splitting, entering input...
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
@@ -133,28 +141,32 @@ function dealerTurn(cardArray) {
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
 
     //After dealer is done drawing cards or busts --> decide winner
-    let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
+    let payout = Math.floor(handBet * 1.5); //Payout is 3:2
     console.log(playerCurrentCash);
+
+    let gameOverMessage = '';
 
     if (dealerHandValue > 21) {
         playerCurrentCash += payout;
-        message.innerText = `Dealer busts! You win $${payout}`
+        gameOverMessage = `Dealer busts! You win $${payout}`
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
-        message.innerText = 'House wins... better luck next time';
-        playerCurrentCash -= playerCurrentBet;
+        gameOverMessage = 'House wins... better luck next time';
+        playerCurrentCash -= handBet;
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue === playerHandValue) {
-        message.innerText = 'Push! (tie)';
+        gameOverMessage = 'Push! (tie)';
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (playerHandValue > dealerHandValue) {
-        message.innerText = `Player wins $${payout}!!!`;
+        gameOverMessage = `Player wins $${payout}!!!`;
         playerCurrentCash += payout;
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
+
+    return gameOverMessage;
 }
 
 function calculateCards(playerCardArray) {
