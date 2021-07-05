@@ -5,12 +5,14 @@ const cardValues = ["A", "02", "03", "04", "05", "06", "07", "08", "09", "10", "
 /*--------------------------------Game State Variables --------------------------------*/
 let dealerCards = [];
 let playerCards = [];
-let playerCurrentBet;
+let playerSplitCards = [];
+let playerCurrentBet = 0;
 let deck = [];
 let playerCurrentCash = 1000;
 
 /*------------------------ Cached Element References ------------------------*/
 const playerCardsEl = document.getElementById('playerStack'); //Dont forget to style this so it shows up. This is where the cards will be displayed 
+const playerSplitCardsEl = document.getElementById('splitStack')
 const dealerCardsEl = document.getElementById('dealerStack'); //Dont forget to style this
 const message = document.getElementById('message');
 const currentBetEl = document.getElementById('currentBet');
@@ -43,8 +45,10 @@ function init() {
     deck = [];
     playerCards = [];
     dealerCards = [];
+    playerSplitCards = [];
     removeAllChildNodes(playerCardsEl);
     removeAllChildNodes(dealerCardsEl);
+    removeAllChildNodes(playerSplitCardsEl);
     message.innerText = 'Insurance Pays 2 to 1'
 
     //If user bet, proceed
@@ -74,14 +78,12 @@ function firstDeal() {
         deck.push('c' + cardValues[i]);
         deck.push('h' + cardValues[i]);
     }
-    console.log(deck);
 
     //Deal a random int index card to the player, remove from deck
     const dealerFirstCard = hit();
     const playerFirstCard = hit();
     const dealerSecondCard = hit();
     const playerSecondCard = hit();
-    console.log(deck);
     dealerCards.push(dealerFirstCard, dealerSecondCard);
     playerCards.push(playerFirstCard, playerSecondCard);
     //Wait for user input...
@@ -196,14 +198,19 @@ function split() {
     console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
     //Checks if card values are the same OR if both cards are face cards or face card and 10
     if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2)) {
-        console.log('made it to split');
-        
+        playerSplitCards.push(playerCards.splice(1, 1));
+        let card = playerSplitCards[0];
+        let newCard = document.createElement("div");
+        newCard.id = 'playerCard'
+        newCard.className = 'card xlarge ' + card;
+        playerCardsEl.removeChild(playerCardsEl.childNodes[1]); //remove from other stack
+        playerSplitCardsEl.appendChild(newCard); //make new stack
+
+        console.log(`player cards: ${playerCards} playerSplitCards: ${playerSplitCards}`);
     }
 }
 
 function renderCards(currentPlayer) {
-    console.log(playerCards);
-    console.log(dealerCards);
     let cardArray, element;
 
     if (currentPlayer === 'p') {
@@ -214,7 +221,7 @@ function renderCards(currentPlayer) {
         element = dealerCardsEl;
     }
 
-    if (cardArray.length < 3) {
+    if (cardArray.length < 3 && !element.hasChildNodes()) {
         cardArray.forEach(card => {
             let newCard = document.createElement("div");
             newCard.id = 'playerCard'
@@ -229,7 +236,7 @@ function renderCards(currentPlayer) {
                 element.appendChild(newCard);
             }
         })
-    } else {
+    } else { //render new card on hit
         let card = cardArray[cardArray.length-1];
         let newCard = document.createElement("div");
         newCard.id = 'playerCard'
