@@ -7,7 +7,6 @@ let dealerCards = [];
 let playerCards = [];
 let playerSplitCards = [];
 let playerCurrentBet = 0;
-let splitBet = 0;
 let deck = [];
 let playerCurrentCash = 1000;
 
@@ -31,18 +30,23 @@ hitButton.addEventListener('click', (Event) => {
     //check for player bust and end round
     let playerHandValue = calculateCards(playerCards);
     if (playerHandValue > 21) {
-        message.innerText = 'Player bust... better luck next time';
+        message.innerText = 'Player bust - better luck next time';
     }
 });
 stayButton.addEventListener('click', (Event) => {
-    let firstGameOverMessage = dealerTurn(playerCards, playerCurrentBet);
+    let firstGameOverMessage = dealerTurn(playerCards);
     let secondGameOverMessage = '';
 
     if (playerSplitCards.length > 0) {
-        console.log('Calculating SPLIT Hand')
-        secondGameOverMessage = dealerTurn(playerSplitCards, splitBet);
-        console.log(`For your first hand: ${firstGameOverMessage}, For your second hand: ${secondGameOverMessage}`);
-        message.innerText = `First hand: ${firstGameOverMessage}, Second hand: ${secondGameOverMessage}`;
+        if (calculateCards(playerSplitCards) > 21) {
+            secondGameOverMessage = 'Player bust... better luck next time';
+        }
+        else {
+            console.log('Calculating SPLIT Hand')
+            secondGameOverMessage = dealerTurn(playerSplitCards);
+            console.log(`For your first hand: ${firstGameOverMessage}, For your second hand: ${secondGameOverMessage}`);
+            message.innerText = `First hand: ${firstGameOverMessage}, Second hand: ${secondGameOverMessage}`;
+        }
     }
     else {
         message.innerText = firstGameOverMessage;
@@ -123,7 +127,7 @@ function hit() {
     return deck.splice([Math.floor(Math.random() * deck.length)], 1);
 }
 
-function dealerTurn(cardArray, handBet) {
+function dealerTurn(cardArray) {
     //After player is done betting, doubling down, splitting, entering input...
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
@@ -140,20 +144,29 @@ function dealerTurn(cardArray, handBet) {
     let playerHandValue = calculateCards(cardArray);
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
 
-    //After dealer is done drawing cards or busts --> decide winner
-    let payout = Math.floor(handBet * 1.5); //Payout is 3:2
+    //If player has chosen to split, double their original bet for payout
+    if (playerSplitCards.length > 0) {
+        playerCurrentBet *= 2;
+    }
+
+    let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
     console.log(playerCurrentCash);
 
     let gameOverMessage = '';
 
-    if (dealerHandValue > 21) {
+    if (playerHandValue > 21) {
+        gameOverMessage = 'Player bust - better luck next time';
+        playerCurrentCash -= playerCurrentBet;
+        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+    }
+    else if (dealerHandValue > 21) {
         playerCurrentCash += payout;
         gameOverMessage = `Dealer busts! You win $${payout}`
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
         gameOverMessage = 'House wins... better luck next time';
-        playerCurrentCash -= handBet;
+        playerCurrentCash -= playerCurrentBet;
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue === playerHandValue) {
@@ -213,8 +226,10 @@ function split() {
     let faceCard2 = faces.includes(playerCard2);
 
     console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
+    console.log(`faceCard1 = ${faceCard1} faceCard2=${faceCard2}`);
+
     //Checks if card values are the same OR if both cards are face cards or face card and 10
-    if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2) && playerSplitCards.length == 0) {
+    if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2)) {
         playerSplitCards.push(playerCards.splice(1, 1));
         let card = playerSplitCards[0];
         let newCard = document.createElement("div");
@@ -226,7 +241,7 @@ function split() {
         console.log(`player cards: ${playerCards} playerSplitCards: ${playerSplitCards}`);
         splitButton.innerText = 'SPLIT (HIT)'
     }
-    else {
+    else if (playerSplitCards.length > 0) {
         let card = hit();
         playerSplitCards.push(card);
         renderCards('s');
