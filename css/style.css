@@ -70,7 +70,6 @@ body {
     border-color: black;
     border: 2px solid black;
     margin-bottom: -18vh;
-    z-index: 1;
 }
 
 #chipPiles {

@@ -7,6 +7,7 @@ let dealerCards = [];
 let playerCards = [];
 let playerSplitCards = [];
 let playerCurrentBet = 0;
+let splitBet = 0;
 let deck = [];
 let playerCurrentCash = 1000;
 
@@ -33,7 +34,13 @@ hitButton.addEventListener('click', (Event) => {
         message.innerText = 'Player bust... better luck next time';
     }
 });
-stayButton.addEventListener('click', dealerTurn);
+stayButton.addEventListener('click', (Event) => {
+    dealerTurn(playerCards);
+    if (playerSplitCards.length > 0) {
+        console.log('Calculating SPLIT Hand')
+        dealerTurn(playerSplitCards);
+}
+});
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
 splitButton.addEventListener('click', split);
@@ -50,7 +57,7 @@ function init() {
     removeAllChildNodes(dealerCardsEl);
     removeAllChildNodes(playerSplitCardsEl);
     message.innerText = 'Insurance Pays 2 to 1'
-
+    splitButton.innerText = 'SPLIT'
     //If user bet, proceed
     //placeBet();
     //2. call Deal()
@@ -108,9 +115,8 @@ function hit() {
     return deck.splice([Math.floor(Math.random() * deck.length)], 1);
 }
 
-function dealerTurn() {
+function dealerTurn(cardArray) {
     //After player is done betting, doubling down, splitting, entering input...
-
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
     while(calculateCards(dealerCards) < 16) {
@@ -123,7 +129,7 @@ function dealerTurn() {
     dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
 
     let dealerHandValue = calculateCards(dealerCards);
-    let playerHandValue = calculateCards(playerCards);
+    let playerHandValue = calculateCards(cardArray);
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
 
     //After dealer is done drawing cards or busts --> decide winner
@@ -134,7 +140,6 @@ function dealerTurn() {
         playerCurrentCash += payout;
         message.innerText = `Dealer busts! You win $${payout}`
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
-
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
         message.innerText = 'House wins... better luck next time';
@@ -197,7 +202,7 @@ function split() {
 
     console.log(`SPLIT FUNCTION: playerCard1: ${playerCard1} playerCard2: ${playerCard2}`);
     //Checks if card values are the same OR if both cards are face cards or face card and 10
-    if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2)) {
+    if ((playerCards.length == 2 && playerCard1 === playerCard2) || (faceCard1 && faceCard2) && playerSplitCards.length == 0) {
         playerSplitCards.push(playerCards.splice(1, 1));
         let card = playerSplitCards[0];
         let newCard = document.createElement("div");
@@ -207,6 +212,12 @@ function split() {
         playerSplitCardsEl.appendChild(newCard); //make new stack
 
         console.log(`player cards: ${playerCards} playerSplitCards: ${playerSplitCards}`);
+        splitButton.innerText = 'SPLIT (HIT)'
+    }
+    else {
+        let card = hit();
+        playerSplitCards.push(card);
+        renderCards('s');
     }
 }
 
@@ -219,6 +230,10 @@ function renderCards(currentPlayer) {
     } else if (currentPlayer === 'd') {
         cardArray = dealerCards;
         element = dealerCardsEl;
+    }
+    else if (currentPlayer === 's') {
+        cardArray = playerSplitCards;
+        element = playerSplitCardsEl;
     }
 
     if (cardArray.length < 3 && !element.hasChildNodes()) {
