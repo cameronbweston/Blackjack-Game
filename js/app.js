@@ -40,7 +40,9 @@ hitButton.addEventListener('click', (Event) => {
         message.innerText = 'Player bust - better luck next time';
     }
 });
+
 stayButton.addEventListener('click', stay);
+
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
 splitButton.addEventListener('click', split);
@@ -256,7 +258,7 @@ function split() {
     //Checks if card values are the same OR if both cards are face cards or face card and 10
     if (checkForSplit()) {
         cardDealSound.play();
-        
+
         playerSplitCards.push(playerCards.splice(1, 1));
         let card = playerSplitCards[0];
         let newCard = document.createElement("div");
