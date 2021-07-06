@@ -39,7 +39,7 @@ hitButton.addEventListener('click', (Event) => {
     //check for player bust and end round
     let playerHandValue = calculateCards(playerCards);
     if (playerHandValue > 21) {
-        message.innerText = 'Player bust - better luck next time';
+        stay();
     }
 });
 
