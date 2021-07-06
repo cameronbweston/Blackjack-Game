@@ -58,6 +58,7 @@ betSlider.addEventListener('input', (Event) => {
 
 function init() {
     console.log('init');
+    playerCurrentBet = betSlider.value
     deck = [];
     playerCards = [];
     dealerCards = [];
