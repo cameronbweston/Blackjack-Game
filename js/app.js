@@ -26,6 +26,8 @@ const stayButton = document.getElementById('stayButton');
 const playButton = document.getElementById('playButton');
 const doubleDownButton = document.getElementById('doubleDownButton');
 const splitButton = document.getElementById('splitButton');
+const currentBetDisplay = document.getElementById('betValue');
+const betSlider = document.getElementById('betSlider');
 /*----------------------------- Event Listeners -----------------------------*/
 hitButton.addEventListener('click', (Event) => {
     doubleDownButton.disabled = true;
@@ -46,6 +48,11 @@ stayButton.addEventListener('click', stay);
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
 splitButton.addEventListener('click', split);
+betSlider.addEventListener('input', (Event) => {
+    console.log(`betSlider: ${this.value}`)
+    currentBetDisplay.innerText = `BET: $${betSlider.value}`;
+    playerCurrentBet = betSlider.value;
+});
 
 /*-------------------------------- Functions --------------------------------*/
 
