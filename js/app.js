@@ -46,7 +46,7 @@ doubleDownButton.addEventListener('click', doubleDown);
 splitButton.addEventListener('click', split);
 
 betSlider.addEventListener('input', (Event) => {
-    console.log(`betSlider: ${this.value}`)
+    console.log(`betSlider: ${this.value}`);
     currentBetDisplay.innerText = `BET: $${betSlider.value}`;
     playerCurrentBet = betSlider.value;
     if(playerCurrentCash > 1000) {
@@ -141,7 +141,7 @@ function dealerTurn(cardArray) {
 
     //Dealer shows all of his cards
     //If dealer has 16 or less, must hit until passes 16
-    while(calculateCards(dealerCards) < 16) {
+    while(calculateCards(dealerCards) <= 16) {
             let card = hit();
             dealerCards.push(card);
             renderCards('d');
@@ -149,6 +149,7 @@ function dealerTurn(cardArray) {
 
     //Flip over dealer's face down card
     dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
+    dealerCardsEl.firstChild.classList.add('animate__animated', 'animate__flipInY');
     cardFlipSound.play();
 
     let dealerHandValue = calculateCards(dealerCards);
@@ -193,12 +194,12 @@ function calculateCards(playerCardArray) {
         if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
             total += 10;
         }
+        else if (cardValue === 'A' && multipleAce === true) {
+            total += 1;
+        }
         else if (cardValue === 'A') {
             total += 11;
             multipleAce = true;
-        }
-        else if (cardValue === 'A' && multipleAce === true) {
-            total += 1;
         }
         else {
             total += parseInt(cardValue);
@@ -285,10 +286,12 @@ function renderCards(currentPlayer) {
             //Make dealer's first card, face down
             if (currentPlayer === 'd' && cardArray[0] === card) { 
                 newCard.className = 'card xlarge back-red';
+                newCard.classList.add('animate__animated', 'animate__backInDown');
                 element.appendChild(newCard);
             }
             else {
                 newCard.className = 'card xlarge ' + card;
+                newCard.classList.add('animate__animated', 'animate__backInDown');
                 element.appendChild(newCard);
             }
         })
@@ -297,6 +300,7 @@ function renderCards(currentPlayer) {
         let newCard = document.createElement("div");
         newCard.id = 'playerCard'
         newCard.className = 'card xlarge ' + card;
+        newCard.classList.add('animate__animated', 'animate__backInDown');
         element.appendChild(newCard);
     }
     cardDealSound.play();
