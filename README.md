@@ -2,7 +2,7 @@
 Unit-1-Game
 
 ## Objective:
-My favorite game to play at casino's has always been Blackjack. It's a thrilling combination of both luck and skill and offers you a far better chance of winning (and payout) than most slot machines! I challenged myself by building my own version to better teach myself JavaScript and CSS as well as to learn more about the game I love.
+My favorite game to play at casino's has always been Blackjack. It's a thrilling combination of both luck and skill and offers you a far better chance of winning (and payout) than most slot machines! I challenged myself by building my own version. This has helped me to learn JavaScript and CSS better and to learn more about the game I love.
 
 ## Technologies Utilized
 * HTML
