@@ -157,7 +157,7 @@ function dealerTurn(cardArray) {
     let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
 
     if (playerHandValue > 21) {
-        gameOverMessage = 'Player bust - better luck next time';
+        gameOverMessage = 'Player bust! Better luck next time';
         playerCurrentCash -= playerCurrentBet;
         totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
@@ -167,7 +167,7 @@ function dealerTurn(cardArray) {
         totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
-        gameOverMessage = 'House wins... better luck next time';
+        gameOverMessage = 'House wins... Better luck next time';
         playerCurrentCash -= playerCurrentBet;
         totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
@@ -186,6 +186,8 @@ function dealerTurn(cardArray) {
 
 function calculateCards(playerCardArray) {
     let total = 0;
+    let multipleAce = false;
+
     playerCardArray.forEach(card => {
         let cardValue = String(card).substring(1,3);
         if (cardValue === 'J' || cardValue === 'Q' || cardValue === 'K') {
@@ -193,6 +195,10 @@ function calculateCards(playerCardArray) {
         }
         else if (cardValue === 'A') {
             total += 11;
+            multipleAce = true;
+        }
+        else if (cardValue === 'A' && multipleAce === true) {
+            total += 1;
         }
         else {
             total += parseInt(cardValue);
