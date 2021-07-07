@@ -72,17 +72,9 @@ function init() {
     doubleDownButton.disabled = false;
     message.innerText = 'Insurance Pays 2 to 1'
     splitButton.innerText = 'SPLIT'
-    //If user bet, proceed
-    //placeBet();
+
     //2. call Deal()
     firstDeal();
-}
-
-function placeBet() {
-    const bet = prompt('Please enter a bet less than 1000');
-    console.log(bet);
-    playerCurrentBet = bet;
-    currentBetEl.innerText = `Current Bet: ${playerCurrentBet}`
 }
 
 function firstDeal() {
@@ -111,15 +103,17 @@ function firstDeal() {
     let playerHandValue = calculateCards(playerCards);
 
     if(playerHandValue === 21) {
+        hitButton.disabled = true;
+        stayButton.disabled = true;
+        doubleDownButton.disabled = true;
+        splitButton.disabled = true; 
+
         let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
         message.innerText = `BLACKJACK $${payout}!!!`;
         playerCurrentCash += payout;
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
         //render player win
         //end round
-        hitButton.disabled = true;
-        stayButton.disabled = true;
-        doubleDownButton.disabled = true;
     }
 
     let possibleSplit = checkForSplit();
