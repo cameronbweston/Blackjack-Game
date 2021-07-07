@@ -52,6 +52,7 @@ betSlider.addEventListener('input', (Event) => {
     console.log(`betSlider: ${this.value}`)
     currentBetDisplay.innerText = `BET: $${betSlider.value}`;
     playerCurrentBet = betSlider.value;
+    betSlider.max = playerCurrentCash;
 });
 
 /*-------------------------------- Functions --------------------------------*/
@@ -159,14 +160,15 @@ function dealerTurn(cardArray) {
     doubleDownButton.disabled = true;
     splitButton.disabled = true;
 
+
     while(calculateCards(dealerCards) < 16) {
-        let card = hit();
-        dealerCards.push(card);
-        renderCards('d');
+            let card = hit();
+            dealerCards.push(card);
+            renderCards('d');
     }
 
     //Flip over dealer's face down card
-    dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
+    dealerCardsEl.firstChild.className = 'card ' + dealerCards[0];
     cardFlipSound.play();
 
     let dealerHandValue = calculateCards(dealerCards);
@@ -299,6 +301,7 @@ function renderCards(currentPlayer) {
         cardArray = playerSplitCards;
         element = playerSplitCardsEl;
     }
+
 
     if (cardArray.length < 3 && !element.hasChildNodes()) {
         cardArray.forEach(card => {

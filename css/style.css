@@ -24,18 +24,17 @@ body {
 
 .insuranceBar{
     border: 3px solid wheat;
-    border-radius: 0.5em;
+    border-radius: 0.7em;
     color: wheat;
     background: rgba(26, 26, 156, 0.562);
-    height: 5vh;
-    width: 90%;
+    height: 2em;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: auto;
-    margin-top: 10%;
-    font-size: 2em;
+    margin-top: 12vh;
+    font-size: 1.5em;
+    padding: 1em;
 }
 
 #playerGameMats {
@@ -101,8 +100,8 @@ body {
 .cardButtons {
     border: 3px solid black;
     border-radius: 4em;
-    height: 4vh;
-    width: 10vh;
+    height: 3.5em;
+    width: 8em;
     margin: 0.3vh;
 }
 
@@ -118,7 +117,7 @@ body {
     justify-content: center;
     margin: auto;
     font-size: 1.5em;
-    width: 15%;
+    width: 6em;
 }
 
 #sliderContainer {
