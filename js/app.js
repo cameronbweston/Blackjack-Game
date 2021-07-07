@@ -52,7 +52,12 @@ betSlider.addEventListener('input', (Event) => {
     console.log(`betSlider: ${this.value}`)
     currentBetDisplay.innerText = `BET: $${betSlider.value}`;
     playerCurrentBet = betSlider.value;
-    betSlider.max = playerCurrentCash;
+    if(playerCurrentCash > 1000) {
+        betSlider.max = playerCurrentCash;
+    }
+    else {
+        betSlider.max = 1000;
+    }
 });
 
 /*-------------------------------- Functions --------------------------------*/
@@ -73,6 +78,8 @@ function init() {
     message.innerText = 'Insurance Pays 2 to 1'
     splitButton.innerText = 'SPLIT'
 
+    playerCurrentCash < 501 ? totalCashEl.style.backgroundColor = 'red' : totalCashEl.style.backgroundColor = 'green'
+    
     //2. call Deal()
     firstDeal();
 }
