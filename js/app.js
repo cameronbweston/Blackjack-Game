@@ -101,7 +101,9 @@ function firstDeal() {
     renderCards('p');
 
     let playerHandValue = calculateCards(playerCards);
-
+    let possibleSplit = checkForSplit();
+    if (possibleSplit) { splitButton.disabled = false; }
+    
     if(playerHandValue === 21) {
         hitButton.disabled = true;
         stayButton.disabled = true;
@@ -115,9 +117,6 @@ function firstDeal() {
         //render player win
         //end round
     }
-
-    let possibleSplit = checkForSplit();
-    if (possibleSplit) { splitButton.disabled = false; }
 }
 
 function stay() {
