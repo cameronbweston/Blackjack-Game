@@ -131,8 +131,7 @@ function stay() {
         else {
             console.log('Calculating SPLIT Hand')
             secondGameOverMessage = dealerTurn(playerSplitCards);
-            console.log(`For your first hand: ${firstGameOverMessage}, For your second hand: ${secondGameOverMessage}`);
-            message.innerText = `First hand: ${firstGameOverMessage}, Second hand: ${secondGameOverMessage}`;
+            message.innerText = `First: ${firstGameOverMessage}, Second: ${secondGameOverMessage}`;
         }
     }
     else {
@@ -162,17 +161,13 @@ function dealerTurn(cardArray) {
     }
 
     //Flip over dealer's face down card
-    dealerCardsEl.firstChild.className = 'card ' + dealerCards[0];
+    dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
     cardFlipSound.play();
 
     let dealerHandValue = calculateCards(dealerCards);
     let playerHandValue = calculateCards(cardArray);
     console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
 
-    //If player has chosen to split, double their original bet for payout
-    if (playerSplitCards.length > 0) {
-        playerCurrentBet *= 2;
-    }
 
     let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
     console.log(playerCurrentCash);
@@ -195,11 +190,11 @@ function dealerTurn(cardArray) {
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (dealerHandValue === playerHandValue) {
-        gameOverMessage = 'Push! (tie)';
+        gameOverMessage = 'Push';
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
     else if (playerHandValue > dealerHandValue) {
-        gameOverMessage = `Player wins $${payout}!!!`;
+        gameOverMessage = `Player wins $${payout}!`;
         playerCurrentCash += payout;
         totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
     }
