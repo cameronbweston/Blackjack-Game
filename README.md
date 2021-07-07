@@ -10,8 +10,11 @@ My favorite game to play at casino's has always been Blackjack. It's a thrilling
 * HTML
 * CSS
 * Javascript
-* Boot
+* Bootstrap
 
+## References
+* Audio provided by freesound.org
+  
 ## Wireframe
 [Wireframe Link](https://wireframe.cc/upALWn)
 

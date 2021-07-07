@@ -1,5 +1,4 @@
 /*-------------------------------- Constants --------------------------------*/
-const suits = ["spades", "diamonds", "clubs", "hearts"];
 const cardValues = ["A", "02", "03", "04", "05", "06", "07", "08", "09", "10", "J", "Q", "K"];
 const cardDealSound = new Audio("../audio/cardDeal.ogg");
 const cardFlipSound = new Audio('../audio/cardFlip.wav');
@@ -32,22 +31,20 @@ const betSlider = document.getElementById('betSlider');
 hitButton.addEventListener('click', (Event) => {
     doubleDownButton.disabled = true;
 
-    let card = hit();
-    playerCards.push(card);
+    playerCards.push(hit());
     renderCards('p');
     cardDealSound.play();
     //check for player bust and end round
-    let playerHandValue = calculateCards(playerCards);
-    if (playerHandValue > 21) {
+    if (calculateCards(playerCards) > 21) {
         stay();
     }
 });
 
 stayButton.addEventListener('click', stay);
-
 playButton.addEventListener('click', init);
 doubleDownButton.addEventListener('click', doubleDown);
 splitButton.addEventListener('click', split);
+
 betSlider.addEventListener('input', (Event) => {
     console.log(`betSlider: ${this.value}`)
     currentBetDisplay.innerText = `BET: $${betSlider.value}`;
@@ -80,7 +77,6 @@ function init() {
 
     playerCurrentCash < 501 ? totalCashEl.style.backgroundColor = 'red' : totalCashEl.style.backgroundColor = 'green'
     
-    //2. call Deal()
     firstDeal();
 }
 
@@ -95,23 +91,17 @@ function firstDeal() {
     }
 
     //Deal a random int index card to the player, remove from deck
-    const dealerFirstCard = hit();
-    const playerFirstCard = hit();
-    const dealerSecondCard = hit();
-    const playerSecondCard = hit();
-    dealerCards.push(dealerFirstCard, dealerSecondCard);
-    playerCards.push(playerFirstCard, playerSecondCard);
+    dealerCards.push(hit(), hit());
+    playerCards.push(hit(), hit());
     //Wait for user input...
     //Render dealer and player card images
-
     renderCards('d');
     renderCards('p');
 
-    let playerHandValue = calculateCards(playerCards);
     let possibleSplit = checkForSplit();
     if (possibleSplit) { splitButton.disabled = false; }
 
-    if(playerHandValue === 21) {
+    if(calculateCards(playerCards) === 21) {
         hitButton.disabled = true;
         stayButton.disabled = true;
         doubleDownButton.disabled = true;
@@ -121,8 +111,6 @@ function firstDeal() {
         message.innerText = `BLACKJACK $${payout}!!!`;
         playerCurrentCash += payout;
         totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
-        //render player win
-        //end round
     }
 }
 
@@ -131,14 +119,8 @@ function stay() {
     let secondGameOverMessage = '';
 
     if (playerSplitCards.length > 0) {
-        if (calculateCards(playerSplitCards) > 21) {
-            secondGameOverMessage = 'Player bust... better luck next time';
-        }
-        else {
-            console.log('Calculating SPLIT Hand')
-            secondGameOverMessage = dealerTurn(playerSplitCards);
-            message.innerText = `First: ${firstGameOverMessage}, Second: ${secondGameOverMessage}`;
-        }
+        secondGameOverMessage = dealerTurn(playerSplitCards);
+        message.innerText = `First: ${firstGameOverMessage}, Second: ${secondGameOverMessage}`;
     }
     else {
         message.innerText = firstGameOverMessage;
@@ -152,14 +134,13 @@ function hit() {
 
 function dealerTurn(cardArray) {
     //After player is done betting, doubling down, splitting, entering input...
-    //Dealer shows all of his cards
-    //If dealer has 16 or less, must hit until passes 16
     hitButton.disabled = true;
     stayButton.disabled = true;
     doubleDownButton.disabled = true;
     splitButton.disabled = true;
 
-
+    //Dealer shows all of his cards
+    //If dealer has 16 or less, must hit until passes 16
     while(calculateCards(dealerCards) < 16) {
             let card = hit();
             dealerCards.push(card);
@@ -172,13 +153,8 @@ function dealerTurn(cardArray) {
 
     let dealerHandValue = calculateCards(dealerCards);
     let playerHandValue = calculateCards(cardArray);
-    console.log(`dealerHandValue: ${dealerHandValue} playerHandValue: ${playerHandValue}`);
-
-
-    let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
-    console.log(playerCurrentCash);
-
     let gameOverMessage = '';
+    let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
 
     if (playerHandValue > 21) {
         gameOverMessage = 'Player bust - better luck next time';
@@ -259,8 +235,6 @@ function checkForSplit() {
 }
 
 function split() {
-
-    //Checks if card values are the same OR if both cards are face cards or face card and 10
     if (checkForSplit()) {
         cardDealSound.play();
 
@@ -296,7 +270,6 @@ function renderCards(currentPlayer) {
         cardArray = playerSplitCards;
         element = playerSplitCardsEl;
     }
-
 
     if (cardArray.length < 3 && !element.hasChildNodes()) {
         cardArray.forEach(card => {
