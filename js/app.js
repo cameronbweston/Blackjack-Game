@@ -103,7 +103,7 @@ function firstDeal() {
     let playerHandValue = calculateCards(playerCards);
     let possibleSplit = checkForSplit();
     if (possibleSplit) { splitButton.disabled = false; }
-    
+
     if(playerHandValue === 21) {
         hitButton.disabled = true;
         stayButton.disabled = true;
@@ -113,7 +113,7 @@ function firstDeal() {
         let payout = Math.floor(playerCurrentBet * 1.5); //Payout is 3:2
         message.innerText = `BLACKJACK $${payout}!!!`;
         playerCurrentCash += payout;
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
         //render player win
         //end round
     }
@@ -176,26 +176,26 @@ function dealerTurn(cardArray) {
     if (playerHandValue > 21) {
         gameOverMessage = 'Player bust - better luck next time';
         playerCurrentCash -= playerCurrentBet;
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
     else if (dealerHandValue > 21) {
         playerCurrentCash += payout;
         gameOverMessage = `Dealer busts! You win $${payout}`
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
     else if (dealerHandValue <= 21 && dealerHandValue > playerHandValue) {
         gameOverMessage = 'House wins... better luck next time';
         playerCurrentCash -= playerCurrentBet;
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
     else if (dealerHandValue === playerHandValue) {
         gameOverMessage = 'Push';
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
     else if (playerHandValue > dealerHandValue) {
         gameOverMessage = `Player wins $${payout}!`;
         playerCurrentCash += payout;
-        totalCashEl.innerText = `Cash: ${playerCurrentCash}`;
+        totalCashEl.innerText = `Cash: $${playerCurrentCash}`;
     }
 
     return gameOverMessage;
