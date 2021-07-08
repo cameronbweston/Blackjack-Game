@@ -4,6 +4,14 @@ Unit-1-Game
 ## Objective:
 My favorite game to play at casino's has always been Blackjack. It's a thrilling combination of both luck and skill and offers you a far better chance of winning (and payout) than most slot machines! I challenged myself by building my own version. This has helped me to learn JavaScript and CSS better and to learn more about the game I love.
 
+## Play my game! :clubs:
+[Deployed Version Of Game](https://jackblackjack.surge.sh/)
+
+## How to play:
+1. Use the bet slider to place your initial bet. 
+2. Hit the green play button to start a round of blackjack
+3. Depending on your cards, you have the option to HIT to draw a new card, STAY to lock in your hand, DOUBLE DOWN on the first hand (doubles your bet and draws 1 card only), or SPLIT if you have 2 cards of equal value and want to play 2 hands at once.
+
 ![Screenshot 1](https://github.com/cameronbweston/Unit-1-Game/blob/main/screenshots/screen1.png)
 
 ## Technologies Utilized
