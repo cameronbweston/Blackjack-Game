@@ -48,7 +48,6 @@ splitButton.addEventListener('click', split);
 betSlider.addEventListener('input', (Event) => {
     console.log(`betSlider: ${this.value}`);
     currentBetDisplay.innerText = `BET: $${betSlider.value}`;
-    playerCurrentBet = betSlider.value;
     if(playerCurrentCash > 1000) {
         betSlider.max = playerCurrentCash;
     }
@@ -148,7 +147,7 @@ function dealerTurn(cardArray) {
     }
 
     //Flip over dealer's face down card
-    dealerCardsEl.firstChild.className = 'card x-large ' + dealerCards[0];
+    dealerCardsEl.firstChild.classList = 'card x-large ' + dealerCards[0];
     dealerCardsEl.firstChild.classList.add('animate__animated', 'animate__flipInY');
     cardFlipSound.play();
 
